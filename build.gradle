@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.ibm.confidenceindex'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = "1.5"
+    targetCompatibility = "1.5"
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation files('libs/com.ibm.openpages.api.jar')
+    implementation files('libs/OpenPagesBase-1.0.jar')
+}
+
+test {
+    useJUnitPlatform()
+}
