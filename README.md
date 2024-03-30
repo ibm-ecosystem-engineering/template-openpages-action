@@ -1,14 +1,27 @@
-# Confidence Index - Custom OpenPages Actions
+# OpenPages Custom Action Template
 
 ## Deployment
 
 ```shell
-oc cp test-custom-action.jar ${NS}/${OPENPAGES_POD_NAME}:/opt/ibm/OpenPages/aurora/op-ext-lib/test-custom-action.jar
+oc patch sts ${OPENPAGES_STS_NAME} --patch-file ${PWD}/patch/openpages-patch.yaml
 ```
 
 where:
-- `NS` is the namespace where OpenPages has been deployed
-- `OPENPAGES_POD_NAME` is the name of the pod in the namespace, e.g. `openpages-openpages-1-sts-0`
+- `OPENPAGES_STS_NAME` is the name of the stateful set in the namespace, e.g. `openpages-openpagesinstance-cr-sts`
+
+## Version update
+
+```shell
+oc edit sts openpages-openpagesinstance-cr-sts
+```
+
+Update the version number for the `openpages-actions` image
+
+## Logs
+
+```shell
+oc logs openpages-openpagesinstance-cr-sts-0
+```
 
 ## Development
 
@@ -22,3 +35,9 @@ podman run --interactive --tty -v $PWD:/workspace openjdk:8 bash
 cd /workspace
 ./gradlew jar
 ```
+
+The container image is pushed to this location in Quay - https://quay.io/repository/ibm_ecosystem_engineering/customaction-helloworld
+
+## Acknowledgements
+
+Thanks to Randy Phoa for the provided roadmap - https://randyphoa.com/ai-governance-on-cloud-pak-for-data-with-openpages-custom-workflow-actions-555473c060c1

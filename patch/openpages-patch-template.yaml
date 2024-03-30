@@ -1,0 +1,31 @@
+spec:
+  template:
+    spec:
+      volumes:
+        - emptyDir: {}
+          name: openpages-openpagesinstance-cr-ext-lib-volume
+      initContainers:
+        - name: openpages-save-original-libs
+          image: OP_IMAGE
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /target
+              name: openpages-openpagesinstance-cr-ext-lib-volume
+          command:
+            - cp
+            - "/opt/ibm/OpenPages/aurora/op-ext-lib/*.jar"
+            - /target
+        - name: openpages-ext-lib-update
+          image: quay.io/ibm_ecosystem_engineering/action-helloworld:v0.1.0
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /target
+              name: openpages-openpagesinstance-cr-ext-lib-volume
+          env:
+            - name: TARGET
+              value: /target
+      containers:
+        - name: openpages-opapp
+          volumeMounts:
+          - name: openpages-openpagesinstance-cr-ext-lib-volume
+            mountPath: /opt/ibm/OpenPages/aurora/op-ext-lib
