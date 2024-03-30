@@ -1,4 +1,4 @@
-package com.ibm.confidenceindex;
+package com.ibm.openpages.support;
 
 public class Main {
     public static void main(String[] args) {

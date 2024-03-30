@@ -1,4 +1,4 @@
-package com.ibm.confidenceindex.models;
+package com.ibm.openpages.support.util;
 
 public interface ResultValue {
     String value();
